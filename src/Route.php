@@ -114,13 +114,14 @@ class Route
     /**
      * Adds parameter
      *
-     * @param string $param Parameter name
+     * @param string                    $param      Parameter name
+     * @param string|ValidatorInterface $validation Validation
      *
      * @return void
      */
-    public function param($param)
+    public function param($param, $validation)
     {
-        $this->params[] = new Param($param);
+        $this->params[] = new Param($param, $validation);
     }
 
     /**

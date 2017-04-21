@@ -8,6 +8,8 @@ namespace PhilWaters\API;
 require_once "Arg.php";
 require_once "Param.php";
 require_once "Route.php";
+require_once "ValidatorInterface.php";
+require_once "Validator.php";
 
 /**
  * Handles API end points
@@ -72,13 +74,14 @@ class Router
     /**
      * Defines a parameter to be passed to the handler method
      *
-     * @param string $param Parameter name
+     * @param string                    $param      Parameter name
+     * @param string|ValidatorInterface $validation Validation
      *
      * @return Router
      */
-    public function param($param)
+    public function param($param, $validation = null)
     {
-        $this->route->param($param);
+        $this->route->param($param, $validation);
         return $this;
     }
 

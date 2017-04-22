@@ -27,7 +27,7 @@ class Validator implements ValidatorInterface
     /**
      * Validator constructor
      *
-     * @param string $validation Validation
+     * @param string|callable $validation Validation name, regular expression or callable
      */
     public function __construct($validation)
     {
@@ -42,7 +42,15 @@ class Validator implements ValidatorInterface
         $callable = $this->validation;
 
         if (!is_callable($callable)) {
-            $callable = array($this, "validate$callable");
+            $methodName = "validate$callable";
+
+            if (method_exists($this, $methodName)) {
+                $callable = array($this, "validate$callable");
+            } elseif (@preg_match($callable, null) !== false) {
+                return preg_match($callable, $string) === 1;
+            } else {
+                throw new \InvalidArgumentException("$string is an unknown validation");
+            }
         }
 
         return call_user_func($callable, $string);

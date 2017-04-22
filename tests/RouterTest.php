@@ -271,4 +271,49 @@ class RouterTest extends PHPUnit_Framework_TestCase
 
         $router->run("replace/c/b", "GET", array("test" => "abc"));
     }
+
+    public function testValidation_regex_pass()
+    {
+        $router = new Router();
+
+        $router
+            ->url("replace/([a-z]+)/([a-z]+)")
+            ->param("test", "`^[a-z]+$`i")
+            ->method("GET")
+            ->handler("str_replace");
+
+        $router->run("replace/c/b", "GET", array("test" => "abc"));
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testValidation_regex_fail()
+    {
+        $router = new Router();
+
+        $router
+            ->url("replace/([a-z]+)/([a-z]+)")
+            ->param("test", "`^[0-9]+$`i")
+            ->method("GET")
+            ->handler("str_replace");
+
+        $router->run("replace/c/b", "GET", array("test" => "abc"));
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testValidation_regex_invalid()
+    {
+        $router = new Router();
+
+        $router
+            ->url("replace/([a-z]+)/([a-z]+)")
+            ->param("test", "`^[a-z]+$")
+            ->method("GET")
+            ->handler("str_replace");
+
+        $router->run("replace/c/b", "GET", array("test" => "abc"));
+    }
 }

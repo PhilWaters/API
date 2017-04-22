@@ -117,6 +117,6 @@ class Router
             }
         }
 
-        throw new \Exception("TODO");
+        throw new \Exception("$method:$url matches no defined route");
     }
 }

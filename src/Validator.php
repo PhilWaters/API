@@ -49,7 +49,7 @@ class Validator implements ValidatorInterface
             } elseif (@preg_match($callable, null) !== false) {
                 return preg_match($callable, $string) === 1;
             } else {
-                throw new \InvalidArgumentException("$string is an unknown validation");
+                throw new \InvalidArgumentException("$callable is an unknown validation");
             }
         }
 

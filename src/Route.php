@@ -152,6 +152,8 @@ class Route
             $args[] = $param->get($params);
         }
 
+        $args[] = $params;
+
         return $handler->call($args);
     }
 }

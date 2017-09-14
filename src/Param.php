@@ -43,13 +43,15 @@ class Param
      *
      * @return NULL|mixed
      */
-    public function get($params)
+    public function get(&$params)
     {
         if (!isset($params[$this->param])) {
             return null;
         }
 
         $value = $params[$this->param];
+
+        unset($params[$this->param]);
 
         if ($this->validation === null) {
             return $value;

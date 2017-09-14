@@ -16,7 +16,9 @@ class RouterTest extends PHPUnit_Framework_TestCase
             ->arg("b")
             ->param("param1")
             ->method("POST")
-            ->handler("str_replace");
+            ->handler(function($a, $b, $param1, $params) {
+                return str_replace($a, $b, $param1);
+            });
 
         $this->assertEquals("bbc", $router->run("test", "POST", array("param1" => "abc")));
     }
@@ -31,7 +33,9 @@ class RouterTest extends PHPUnit_Framework_TestCase
             ->arg("b")
             ->param("param1")
             ->method("GET")
-            ->handler("str_replace");
+            ->handler(function($a, $b, $param1, $params) {
+                return str_replace($a, $b, $param1);
+            });
 
         $this->assertEquals("", $router->run("test", "GET", array()));
     }
@@ -44,7 +48,9 @@ class RouterTest extends PHPUnit_Framework_TestCase
             ->url("replace/([a-z]+)/([a-z]+)")
             ->param("param1")
             ->method("GET")
-            ->handler("str_replace");
+            ->handler(function($a, $b, $param1, $params) {
+                return str_replace($a, $b, $param1);
+            });
 
         $this->assertEquals("abb", $router->run("replace/c/b", "GET", array("param1" => "abc")));
     }
@@ -60,7 +66,9 @@ class RouterTest extends PHPUnit_Framework_TestCase
             ->url("replace/([a-z]+)/([a-z]+)")
             ->param("param1")
             ->method("GET")
-            ->handler("str_replace");
+            ->handler(function($a, $b, $param1, $params) {
+                return str_replace($a, $b, $param1);
+            });
 
         $router->run("test", "GET", array("param1" => "abc"));
     }
@@ -73,7 +81,9 @@ class RouterTest extends PHPUnit_Framework_TestCase
             ->url("replace/([a-z]+)/([a-z]+)")
             ->param("email", Validator::EMAIL)
             ->method("GET")
-            ->handler("str_replace");
+            ->handler(function($a, $b, $param1, $params) {
+                return str_replace($a, $b, $param1);
+            });
 
         $this->assertEquals("b@b.com", $router->run("replace/a/b", "GET", array("email" => "a@b.com")));
     }
@@ -89,7 +99,9 @@ class RouterTest extends PHPUnit_Framework_TestCase
             ->url("replace/([a-z]+)/([a-z]+)")
             ->param("email", Validator::EMAIL)
             ->method("GET")
-            ->handler("str_replace");
+            ->handler(function($a, $b, $param1, $params) {
+                return str_replace($a, $b, $param1);
+            });
 
         $router->run("replace/c/b", "GET", array("email" => "not an email address"));
     }
@@ -102,7 +114,9 @@ class RouterTest extends PHPUnit_Framework_TestCase
             ->url("replace/([0-9]+)/([0-9]+)")
             ->param("integer", Validator::INTEGER)
             ->method("GET")
-            ->handler("str_replace");
+            ->handler(function($a, $b, $param1, $params) {
+                return str_replace($a, $b, $param1);
+            });
 
         $this->assertEquals("8", $router->run("replace/7/8", "GET", array("integer" => "7")));
     }
@@ -118,7 +132,9 @@ class RouterTest extends PHPUnit_Framework_TestCase
             ->url("replace/([a-z]+)/([a-z]+)")
             ->param("integer", Validator::INTEGER)
             ->method("GET")
-            ->handler("str_replace");
+            ->handler(function($a, $b, $param1, $params) {
+                return str_replace($a, $b, $param1);
+            });
 
         $router->run("replace/c/b", "GET", array("integer" => "1.7"));
     }
@@ -131,7 +147,9 @@ class RouterTest extends PHPUnit_Framework_TestCase
             ->url("replace/([0-9.]+)/([0-9]+)")
             ->param("float", Validator::FLOAT)
             ->method("GET")
-            ->handler("str_replace");
+            ->handler(function($a, $b, $param1, $params) {
+                return str_replace($a, $b, $param1);
+            });
 
         $this->assertEquals("127", $router->run("replace/./2", "GET", array("float" => "1.7")));
     }
@@ -147,7 +165,9 @@ class RouterTest extends PHPUnit_Framework_TestCase
             ->url("replace/([a-z]+)/([a-z]+)")
             ->param("float", Validator::FLOAT)
             ->method("GET")
-            ->handler("str_replace");
+            ->handler(function($a, $b, $param1, $params) {
+                return str_replace($a, $b, $param1);
+            });
 
         $router->run("replace/c/b", "GET", array("float" => "not a float"));
     }
@@ -160,7 +180,9 @@ class RouterTest extends PHPUnit_Framework_TestCase
             ->url("replace/([0-9.]+)/([0-9]+)")
             ->param("number", Validator::NUMBER)
             ->method("GET")
-            ->handler("str_replace");
+            ->handler(function($a, $b, $param1, $params) {
+                return str_replace($a, $b, $param1);
+            });
 
         $this->assertEquals("127", $router->run("replace/./2", "GET", array("number" => "1.7")));
     }
@@ -176,7 +198,9 @@ class RouterTest extends PHPUnit_Framework_TestCase
             ->url("replace/([a-z]+)/([a-z]+)")
             ->param("number", Validator::NUMBER)
             ->method("GET")
-            ->handler("str_replace");
+            ->handler(function($a, $b, $param1, $params) {
+                return str_replace($a, $b, $param1);
+            });
 
         $router->run("replace/c/b", "GET", array("number" => "not a float"));
     }
@@ -189,7 +213,9 @@ class RouterTest extends PHPUnit_Framework_TestCase
             ->url("replace/([0-9]+)/([0-9]+)")
             ->param("ip", Validator::IP)
             ->method("GET")
-            ->handler("str_replace");
+            ->handler(function($a, $b, $param1, $params) {
+                return str_replace($a, $b, $param1);
+            });
 
         $this->assertEquals("1.2.3.5", $router->run("replace/4/5", "GET", array("ip" => "1.2.3.4")));
     }
@@ -205,7 +231,9 @@ class RouterTest extends PHPUnit_Framework_TestCase
             ->url("replace/([a-z]+)/([a-z]+)")
             ->param("ip", Validator::IP)
             ->method("GET")
-            ->handler("str_replace");
+            ->handler(function($a, $b, $param1, $params) {
+                return str_replace($a, $b, $param1);
+            });
 
         $router->run("replace/c/b", "GET", array("ip" => "not an ip address"));
     }
@@ -218,7 +246,9 @@ class RouterTest extends PHPUnit_Framework_TestCase
             ->url("replace/([a-z]+)/([0-9]+)")
             ->param("boolean", Validator::BOOLEAN)
             ->method("GET")
-            ->handler("str_replace");
+            ->handler(function($a, $b, $param1, $params) {
+                return str_replace($a, $b, $param1);
+            });
 
         $this->assertEquals("1", $router->run("replace/true/1", "GET", array("boolean" => "true")));
     }
@@ -234,7 +264,9 @@ class RouterTest extends PHPUnit_Framework_TestCase
             ->url("replace/([a-z]+)/([a-z]+)")
             ->param("boolean", Validator::BOOLEAN)
             ->method("GET")
-            ->handler("str_replace");
+            ->handler(function($a, $b, $param1, $params) {
+                return str_replace($a, $b, $param1);
+            });
 
         $router->run("replace/c/b", "GET", array("boolean" => "not a boolean"));
     }
@@ -249,7 +281,9 @@ class RouterTest extends PHPUnit_Framework_TestCase
                 return true;
             })
             ->method("GET")
-            ->handler("str_replace");
+            ->handler(function($a, $b, $param1, $params) {
+                return str_replace($a, $b, $param1);
+            });
 
         $this->assertEquals("abb", $router->run("replace/c/b", "GET", array("test" => "abc")));
     }
@@ -267,7 +301,9 @@ class RouterTest extends PHPUnit_Framework_TestCase
                 return false;
             })
             ->method("GET")
-            ->handler("str_replace");
+            ->handler(function($a, $b, $param1, $params) {
+                return str_replace($a, $b, $param1);
+            });
 
         $router->run("replace/c/b", "GET", array("test" => "abc"));
     }
@@ -280,7 +316,9 @@ class RouterTest extends PHPUnit_Framework_TestCase
             ->url("replace/([a-z]+)/([a-z]+)")
             ->param("test", "`^[a-z]+$`i")
             ->method("GET")
-            ->handler("str_replace");
+            ->handler(function($a, $b, $param1, $params) {
+                return str_replace($a, $b, $param1);
+            });
 
         $router->run("replace/c/b", "GET", array("test" => "abc"));
     }
@@ -296,7 +334,9 @@ class RouterTest extends PHPUnit_Framework_TestCase
             ->url("replace/([a-z]+)/([a-z]+)")
             ->param("test", "`^[0-9]+$`i")
             ->method("GET")
-            ->handler("str_replace");
+            ->handler(function($a, $b, $param1, $params) {
+                return str_replace($a, $b, $param1);
+            });
 
         $router->run("replace/c/b", "GET", array("test" => "abc"));
     }
@@ -312,7 +352,9 @@ class RouterTest extends PHPUnit_Framework_TestCase
             ->url("replace/([a-z]+)/([a-z]+)")
             ->param("test", "`^[a-z]+$")
             ->method("GET")
-            ->handler("str_replace");
+            ->handler(function($a, $b, $param1, $params) {
+                return str_replace($a, $b, $param1);
+            });
 
         $router->run("replace/c/b", "GET", array("test" => "abc"));
     }
